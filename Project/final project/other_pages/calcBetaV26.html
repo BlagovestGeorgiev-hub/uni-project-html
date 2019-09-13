@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<title>calculator</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<style>
+		body{
+			width: 80%;
+			margin: auto;
+			background-image: url('http://www.syloslabini.info/online/wp-content/uploads/2013/10/Purchased-Math-Mania-Image-Fotolia_18850077_L.jpg');
+			background-repeat: no-repeat;
+			background-size: 100% 100% 100% 100%;
+		}
+		img{
+			float: right;
+			width: auto;
+			height: auto;
+		}
+		#front{
+			margin: auto;
+			border-radius: 10px;
+			width: 75%;
+			height: auto;
+			float: left;
+			text-align: center;
+			padding: 10px;
+			background: #729fcf;
+		}
+		#box0{
+			width: 100%; 
+			height: auto;
+			float: left;
+		}
+		div option{
+			border-radius: 10px;
+		}
+		div button{
+			border-radius: 10px;
+		}
+		#rightPanel0{
+			width: 20%; 
+			height: auto;
+			background: #83cfab;
+			float: left;
+			text-align: center;
+			padding: 1%;
+			border-radius: 5%;
+		}
+		span{
+			font-size: 1em;
+		}
+		</style>
+		<script>
+			function changeColor1(){
+				document.getElementById("front").style.backgroundColor = "#aac8f6";
+			}
+			function changeColor2(){
+				document.getElementById("front").style.backgroundColor = "#729fcf";
+			}
+			function changeColor3(){
+				document.getElementById("rightPanel0").style.backgroundColor = "#8ae234";
+			}
+			function changeColor4(){
+				document.getElementById("rightPanel0").style.backgroundColor = "#83cfab";
+			}
+			function mouseDown(x){
+				document.getElementById(x).style.backgroundColor = "#a2a29f";
+				document.getElementById(x).style.border = "1px solid #828280";
+			}
+			function mouseUp(x){
+				document.getElementById(x).style.backgroundColor = "#e8e8e7";
+				document.getElementById(x).style.border = "1px solid #f8f8f7";
+			}
+			function createForm(buttonId){
+				let boxes = document.getElementById("box" + buttonId.replace( /^\D+/g, ''));
+				let clone = boxes.cloneNode(true);
+				let allMajorsForCounting = document.getElementById('front').children;
+				let count = 0;
+				for(let i = 0; i < allMajorsForCounting.length; i++){
+					if(allMajorsForCounting[i].id.startsWith('box')){
+						count++;
+					}
+				}
+				let cloneChildren = clone.children; 
+				let boxesChildren = boxes.children;
+				for(let j = 0; j < cloneChildren.length; j++){
+					let wholeId = boxesChildren[j].id;
+					let textPartOfTheId = wholeId.replace(new RegExp("[0-9]", "g"), "");
+					cloneChildren[j].setAttribute("id", textPartOfTheId + count);
+				}
+				clone.setAttribute("id", "box" + count);
+				boxes.parentNode.appendChild(clone);
+				let previousButton = document.getElementById("buttonClick" + (count-1));
+				previousButton.parentNode.removeChild(previousButton);
+			}
+			function calculateTax(buttonId){
+			 let resultTax = document.getElementById("tax0");
+			 let resultMonth = document.getElementById("month0");
+			 let taxProfitMonth = calculateTaxAndProfit(buttonId);
+			 if(!taxProfitMonth){
+				return;
+			 }
+			 resultMonth.innerHTML = taxProfitMonth.month ;
+			 resultTax.innerHTML = taxProfitMonth.tax;
+			}
+			
+			function calculateProfit(buttonId){
+			 let resultProfit = document.getElementById("profit0");
+			 let resultMonth = document.getElementById("month0");
+			 let taxProfitMonth = calculateTaxAndProfit(buttonId);
+			 if(!taxProfitMonth){
+				return;
+			 }
+			 resultMonth.innerHTML = taxProfitMonth.month ;
+			 resultProfit.innerHTML = taxProfitMonth.profit;
+			}
+			
+			function inputIsValid(incomeValue, costValue){
+				return isNumeric(incomeValue) && isNumeric(costValue);
+			}
+			
+			function isNumeric(n) {
+				return !isNaN(parseFloat(n)) && isFinite(n);
+			}
+			
+			function calculateTaxAndProfit(buttonId){
+			 let button = document.getElementById(buttonId);
+			 let form = button.parentNode;
+			 let numberId= buttonId.replace( /^\D+/g, '');
+			 
+			 let incomeInput = document.getElementById("firstInput" + numberId);
+			 let costInput = document.getElementById("secondInput" + numberId);
+			 let resultMonth = document.getElementById("month0");
+			 let resultProfit = document.getElementById("profit0");
+			 let resultTax = document.getElementById("tax0");
+			 let monthSelect = document.getElementById("monthToCalc" + numberId);
+			 let monthForCalculationg = monthSelect[monthSelect.selectedIndex];
+			 
+			 if(!inputIsValid(incomeInput.value, costInput.value)){
+				resultMonth.innerHTML = "Грешни входни данни";
+				resultProfit.innerHTML = "Грешни входни данни";
+				resultTax.innerHTML = "Грешни входни данни";
+				resultMonth.style.color="red";
+				resultProfit.style.color="red";
+				resultTax.style.color="red";
+				return;
+			 }else{
+				resultMonth.style.color="green";
+				resultProfit.style.color="green";
+				resultTax.style.color="green";
+			}
+			 			
+			 let incomeValue = parseFloat(incomeInput.value);
+			 let costValue = parseFloat(costInput.value);
+			 let tax = (incomeValue - costValue)/5;
+			 let profit = incomeValue - costValue - tax;
+			 let taxProfitMonth =  {tax: tax, profit: profit, month: monthForCalculationg.text};
+			 return taxProfitMonth;
+			}
+			
+		</script>
+	</head>
+	<body>
+		<img src="html-css-js2.png" alt="pc">
+		<div id = "front" onmouseover = "changeColor1()" onmouseout="changeColor2()">
+			<i class="fa fa-calculator" style="font-size:30px;"></i>
+			<h1>Бизнес калкулатор </h1>
+			<div id = "box0">
+				<select id="monthToCalc0">
+					<option value = "1"> Януари </option>
+					<option value = "2"> Февруари </option>
+					<option value = "3"> Март </option>
+					<option value = "4"> Април </option>
+					<option value = "5"> Май </option>
+					<option value = "6"> Юни </option>
+					<option value = "7"> Юли </option>
+					<option value = "8"> Август </option>
+					<option value = "9"> Септември </option>
+					<option value = "10"> Октомври </option>
+					<option value = "11"> Ноември </option>
+					<option value = "12"> Декември </option>
+				</select>
+				<input type = "number" id="firstInput0" min="1" max="10000" placeholder="приход" onchange="validation()">
+				<input type = "number" id="secondInput0" min="1" max="10000" placeholder="разход" onchange="validation()">
+				<button type = "button" id="taxButton0" onClick = "calculateTax(this.id)" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)">Данък</button>
+				<button id="profitButton0" onClick = "calculateProfit(this.id)" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)">Печалба</button>
+				<button id = "buttonClick0" onClick = "createForm(this.id)" onmousedown="mouseDown(this.id)" onmouseup="mouseUp(this.id)">Добави</button>
+			</div>
+		</div>
+		<div id = "rightPanel0" onmouseover = "changeColor3()" onmouseout="changeColor4()">
+				<h6> Резултати </h6>
+				<div><span id="val"></span></div>
+				<div>За месец:<span id="month0">няма</span></div>
+				<div>Данъка е:<span id="tax0">няма</span></div>
+				<div>Печалбата е:<span id="profit0">няма</span></div>
+		</div>
+		<img src="https://simonswain.com/wdyk/images/html-css-js.png" alt="pc"style="float:right;width:20%;height:20%;">
+	</body>
+	 
+</html>

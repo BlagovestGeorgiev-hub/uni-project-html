@@ -1,0 +1,82 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+.objects {
+   
+     display:inline-block;
+    
+    width: 55px; 
+    height: 50px;
+    margin: 10px;
+    padding: 0px;
+    font-size: 16px;
+    text-align: center;
+    box-shadow: 0px 0px 0px #999 ;
+    cursor: move;
+}
+#drop_zone {
+    background-color: white; 
+    border: red 1px solid;
+    width: 600px; 
+    height: 50px;
+    padding: 0px;
+    font-size:18 px;
+}
+</style>
+<script>
+function _(id){
+   return document.getElementById(id);	
+}
+var droppedIn = false;
+function drag_start(event) {
+    _('app_status').innerHTML = "Dragging the "+event.target.getAttribute('id');
+    event.dataTransfer.dropEffect = "move";
+    event.dataTransfer.setData("text", event.target.getAttribute('id') );
+}
+function drag_enter(event) {
+    _('app_status').innerHTML = "You are dragging over the "+event.target.getAttribute('id');
+}
+function drag_leave(event) {
+    _('app_status').innerHTML = "You left the "+event.target.getAttribute('id');
+}
+function drag_drop(event) {
+    event.preventDefault(); /* Prevent undesirable default behavior while dropping */
+    var elem_id = event.dataTransfer.getData("text");
+    event.target.appendChild( _(elem_id) );
+    _('app_status').innerHTML = "Dropped "+elem_id+" into the "+event.target.getAttribute('id');
+    _(elem_id).removeAttribute("draggable");
+    _(elem_id).style.cursor = "default";
+    droppedIn = true;
+}
+function drag_end(event) {
+    if(droppedIn == false){
+        _('app_status').innerHTML = "You let the "+event.target.getAttribute('id')+" go.";
+    }
+	droppedIn = false;
+}
+function readDropZone(){
+    for(var i=0; i < _("drop_zone").children.length; i++){
+        alert(_("drop_zone").children[i].id+" is in the drop zone");
+    }
+    /* Run Ajax request to pass any data to your server */
+}
+</script>
+</head>
+<body background="http://allswalls.com/images/java-wallpaper-1.jpg" alt="Счупи са брат!">
+<h2 id="app_status">Статус.</h2>
+<h2>Поставете думата долу в зоната.</h2>
+<div id="drop_zone" ondragenter="drag_enter(event)" ondrop="drag_drop(event)" ondragover="return false" ondragleave="drag_leave(event)" ></div>
+<div id="object1" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">да</div>
+<div id="object2" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">Бъди</div>
+<div id="object3" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">която</div>
+<div id="object4" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">искаш</div>
+<div id="object5" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">промяната,</div>
+<div id="object6" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">в</div>
+<div id="object7" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">видиш</div>
+<div id="object8" class="objects" draggable="true" ondragstart="drag_start(event)" ondragend="drag_end(event)">света!</div>
+<hr>
+
+</body>
+</html>

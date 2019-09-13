@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>game5</title>
+		<meta charset="utf-8">
+		<meta name="author" content="Maria Pendova">
+		<style>
+			div.front{
+				width: 770px;
+			}
+			div.left{
+				width: 550px; 
+				height: 190px;
+				background: #f4c580;
+				float: left;
+				text-align: center;
+				border: 1px solid black;
+			}
+			
+			div.left div{
+				margin-top: 20px;
+			}
+			div.right{
+				width: 150px; 
+				height: 190px;
+				background: #83cfab;
+				border: 1px solid black;
+				float: left;
+			}
+			div.right input{
+				margin: 5px;
+			}
+			
+			.sp{
+				border: 1px solid black;
+				padding: 5px 30px;
+			}
+		</style>
+		<script>
+			function check1(){
+				if(document.getElementById("a3").checked){
+					document.getElementById("ans1").style.color="green";
+					document.getElementById("ans1").innerHTML="верен";
+				}
+				else{
+					document.getElementById("ans1").style.color="red";
+					document.getElementById("ans1").innerHTML="грешен";	
+				}
+			}
+			function check2(){
+				if(document.getElementById("b2").checked){
+					document.getElementById("ans2").style.color="green";
+					document.getElementById("ans2").innerHTML="верен";
+				}
+				else{
+					document.getElementById("ans2").style.color="red";
+					document.getElementById("ans2").innerHTML="грешен";	
+				}
+			}
+		</script>
+	</head>
+	<body background="http://allswalls.com/images/java-wallpaper-1.jpg" alt="Счупи са брат!">
+		<div class = "front">
+		<h1> Изберете правилния отговор </h1>
+			<div class = "left">
+				<div>1. Коя е най-високата планина в България?</div>
+				<div>Отговор: <span id="ans1" class= "sp">няма</span></div>
+			</div>
+			<div class="right">
+				<div><input type = "radio" id="a1" name="mountains"> Стара Планина</div>
+				<div><input type = "radio" id="a2" name="mountains">Пирин</div>
+				<div><input type = "radio" id="a3" name="mountains">Рила</div>
+				<div><input type = "radio" id="a4" name="mountains">Родопи</div>
+				<br />
+				<button onClick = "check1()">Провери</button>
+			</div>
+			<div class = "left">
+				<div>1. Кой е написал „История славянобългарска“</div>
+				<div>Отговор: <span id="ans2" class= "sp">няма</span></div>
+			</div>
+			<div class="right">
+				<div><input type = "radio" id="b1" name="autor"> Софроний Врачански </div>
+				<div><input type = "radio" id="b2" name="autor"> Паисий Хилендарски </div>
+				<div><input type = "radio" id="b3" name="autor"> Петър Берон </div>
+				<div><input type = "radio" id="b4" name="autor"> Иван Вазов </div>
+				<br />
+				<button onClick = "check2()">Провери</button>
+			</div>
+		</div>
+	</body>
+</html>

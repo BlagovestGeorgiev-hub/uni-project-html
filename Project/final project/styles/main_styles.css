@@ -1,0 +1,102 @@
+#page_header_container{
+	margin-left: auto;
+    margin-right: auto;
+	high: 120px;
+}
+#page_header_container_picture{
+	position: relative;
+	height: auto; 
+    width: auto;
+	max-width: 80px;
+	max-height: 80px;
+	left: 33%;
+}
+#page_header_container_title{
+	position: relative;
+	max-width: 140px;
+	left: 33%;
+	font-size: 530%;
+	color: #39FF14;
+}
+#play_stop_hans_zimmer {
+    position: absolute;
+    top: 20px;
+    right: 20px;
+}
+#embed_song_on_background{
+	display: none;
+}
+#page_body_container_advertisement_container{
+	display: inline-block;
+	width: 180px;
+	border: 1px inset #39FF14;
+	background: grey;
+	overflow: auto;
+}
+#page_body_container_news_container{
+	width: 180px;
+	overflow: auto;
+	float: right;
+	vertical-align: top;
+}
+.adds_pictures_showed{
+	width: 180px;
+	height: auto;
+	max-width: 180px;
+	
+}
+.adds_pictures_hidden{
+	width: 180px;
+	height: auto;
+	display: none;
+}
+.body_button_containers{
+	display: inline-block;
+	vertical-align: top;
+	width: 10%;
+	text-align: center;
+}
+.body_button_containers_at_right{
+	position: relative;
+	display: inline-block;
+	vertical-align: top;
+	width: 10%;
+	height: 40px;
+	text-align: center;
+	float: right;
+	margin: 2px;
+	background-color: #39FF14;
+	z-index: 3;
+}
+.body_container_major_button{
+	height: 40px;
+	border: 1px inset grey;
+	background-color: #39FF14;
+	align: center;
+}
+.body_container_minor_buttons{
+	height: 40px;
+	border: 1px inset grey;
+	background-color: #39FF14;
+	display: none;
+	align: center;
+	position: relative;
+	z-index: 3;
+}
+.main_page_info_containers{
+	width: 74%;
+	color: #39FF14;
+	left: 13%;
+	top: 155px;
+	position: absolute;
+	z-index: 1;
+}
+.object_displayer{
+	z-index: -1;
+	width: 1050px;
+	height: 1050px;
+}
+#object_container{
+	display: none;
+}
+

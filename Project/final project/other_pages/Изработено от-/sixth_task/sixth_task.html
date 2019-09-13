@@ -1,0 +1,61 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+	#container.span{
+		padding: 10px;
+	}
+</style>
+<script>
+	function selectCorrectAnswer(id){
+		var _element = document.getElementById(id).children[0];
+		var _colorBorder = 'red';
+		var _true = 'true';
+		
+		
+		
+		if(_element.getAttribute("hasStyle").localeCompare(_true)==0){
+			
+			_element.removeAttribute("style");
+			_element.setAttribute("hasStyle", "false");
+			
+			return;
+		}
+		
+	
+		if(parseInt(id) < 4){
+			_colorBorder = 'green';
+		}
+		
+		_element.style.borderWidth = "thick";
+		_element.style.borderStyle = 'double';
+		_element.style.borderColor = _colorBorder;
+		_element.setAttribute("hasStyle", "true");
+	}
+</script>
+</head>
+<body background="http://allswalls.com/images/java-wallpaper-1.jpg" alt="Счупи са брат!">
+<div id='container'>
+	<div id='requirement'>Choose all pictures of birds.</div>
+	<br>
+	<span id='1' class='bird' onclick="selectCorrectAnswer(1)">
+		<img id='1' src='1.jpg' hasStyle='false' >
+	</span>
+	<span id='2' class='bird' onclick="selectCorrectAnswer(2)">
+		<img id='2' src='2.jpg' hasStyle='false'>
+	</span>
+	<span id='3' class='bird' onclick="selectCorrectAnswer(3)">
+		<img id='3' src='3.jpg' hasStyle='false'>
+	</span>
+	<span id='4' class='nonBird' onclick="selectCorrectAnswer(4)">
+		<img id='4' src='4.jpg' hasStyle='false'>
+	</span>
+	<span id='5' class='nonBird' onclick="selectCorrectAnswer(5)">
+		<img id='5' src='5.jpg' hasStyle='false'>
+	</span>
+	
+	
+</div>
+</body>
+</html>

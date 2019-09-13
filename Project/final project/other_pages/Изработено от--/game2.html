@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+	<head>
+	<meta charset="UTF-8">
+		<title>game 2</title>
+		<meta name="author" content="Maria Pendova">
+		<meta charset="utf-8">
+		<style>
+			div.front{
+				width: 670px;
+			}
+			div.left{
+				width: 550px; 
+				height: 100px;
+				background: #f4c580;
+				float: left;
+				text-align: center;
+				border: 1px solid black;
+			}
+			
+			div.left div{
+				margin-top: 20px;
+			}
+			div.right{
+				width: 110px; 
+				height: 100px;
+				background: #83cfab;
+				border: 1px solid black;
+				float: left;
+			}
+			div.right div{
+				width: 90px;
+				margin-top: 3px;
+				margin-left: 7px;
+				border-radius: 10px;
+				background: #80ba2d;
+				border: 1px solid #aac8f6;
+				text-align: center;
+			}
+			div.right div:hover{
+				background-color: #99CDCD;
+				cursor: pointer;
+			}
+			.sp{
+				border: 1px solid black;
+				padding: 5px 20px;
+			}
+		</style>
+		<script>
+			var a_ok = new Array(1, 2);
+
+			function allowDrop(ev) {
+				ev.preventDefault();
+			}
+
+			function drag(ev) {
+				ev.dataTransfer.setData("id", ev.target.id);
+			}
+
+			function drop(ev) {
+				ev.preventDefault();
+				from = ev.dataTransfer.getData("id");
+				to = ev.target.id;
+				to_ok = from.substring(0,3);
+				if (to == to_ok){
+					document.getElementById(to).innerHTML = document.getElementById(from).innerHTML;
+					q_n = from.substr(1,1);
+					a_n = from.substr(3);
+					to_str = to + 's';
+					if (a_ok[q_n] == a_n){
+						document.getElementById(to).style.color = 'green';
+						document.getElementById(to_str).style.color = 'green';
+						document.getElementById(to_str).innerHTML = 'верен';
+					}
+					else{
+						document.getElementById(to).style.color = 'red';
+						document.getElementById(to_str).style.color = 'red';
+						document.getElementById(to_str).innerHTML = 'грешен';
+
+					}
+				}
+			}
+		</script>
+	</head>
+	<body background="http://allswalls.com/images/java-wallpaper-1.jpg" alt="Счупи са брат!">
+		<div class = "front">
+			<h1> Поставете правилните думи на празните места чрез влачене </h1>
+			<div class = "left">
+				<div id="q0">1. Който пее зло не мисли, който <span id="q0a" class="sp" ondrop="drop(event)" ondragover="allowDrop(event)">---</span> да му мисли.</div>
+				<div>Отговор: <span id="q0as">няма</span></div>
+			</div>
+			<div class="right">
+				<div id="q0a0" draggable="true" ondragstart="drag(event)">бие</div>
+				<div id="q0a1" draggable="true" ondragstart="drag(event)">пие</div>
+				<div id="q0a2" draggable="true" ondragstart="drag(event)">крие</div>
+				<div id="q0a3" draggable="true" ondragstart="drag(event)">мие</div>
+			</div>
+			<div class="left">
+				<div id="q1">2. Когато бях <span id="q1a" class="sp" ondrop="drop(event)" ondragover="allowDrop(event)">---</span> и овцете пасях.</div>
+				<div>Отговор: <span id="q1as">няма</span></div>
+			</div>
+			<div class="right">
+				<div id="q1a0" draggable="true" ondragstart="drag(event)">дете</div>
+				<div id="q1a1" draggable="true" ondragstart="drag(event)">сираче</div>
+				<div id="q1a2" draggable="true" ondragstart="drag(event)">овчарче</div>
+				<div id="q1a3" draggable="true" ondragstart="drag(event)">на полето</div>
+			</div>
+		</div>
+	</body>
+</html>

@@ -1,0 +1,85 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+<meta charset="UTF-8">
+<style>
+#target {
+    width: 450px;
+    height: 430px;
+    padding: 10px;
+    border: 1px solid #aaaaaa;
+}
+.dragndrop{
+	border-style: groove;
+	display:inline-block;
+}
+</style>
+<script>
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function drag(ev) {
+	
+	ev.dataTransfer.setData("text", ev.target.id);
+    
+}
+
+function drop(ev) {
+    ev.preventDefault();
+    var data = ev.dataTransfer.getData("text");
+	if(ev.target.id == 'target'){
+	ev.target.appendChild(document.getElementById(data));
+	}
+	
+    
+}
+
+function checkPictureCorrectness(){
+	var target = document.getElementById('target');
+	var children = document.getElementById('target').childNodes;
+	var isCorrect = false;
+	if(children.length ==9){
+		isCorrect = true;
+		for(var i =1; i<= children.length; i++){
+			isCorrect = isCorrect && (parseInt(children[i-1].id) == i);
+		}
+	}
+	
+	document.getElementById('result').innerHTML = isCorrect;
+	if(isCorrect){
+		target.style.borderWidth = "thick";
+		target.style.borderStyle = 'double';
+		target.style.borderColor = "green";
+	}else{
+		target.style.borderWidth = "thick";
+		target.style.borderStyle = 'double';
+		target.style.borderColor = "red";
+	}
+	
+	
+}
+</script>
+</head>
+<body background="http://allswalls.com/images/java-wallpaper-1.jpg" alt="Счупи са брат!">
+
+<p>Make heart with given parts</p>
+
+<div id="target" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+<br>
+
+<img id="2" class="dragndrop" src="2.jpg" draggable="true" ondragstart="drag(event)">
+<img id="3" class="dragndrop" src="3.jpg" draggable="true" ondragstart="drag(event)">
+<img id="1" class="dragndrop" src="1.jpg" draggable="true" ondragstart="drag(event)">
+<img id="9" class="dragndrop" src="9.jpg" draggable="true" ondragstart="drag(event)">
+<img id="4" class="dragndrop" src="4.jpg" draggable="true" ondragstart="drag(event)">
+<img id="7" class="dragndrop" src="7.jpg" draggable="true" ondragstart="drag(event)">
+<img id="5" class="dragndrop" src="5.jpg" draggable="true" ondragstart="drag(event)">
+<img id="6" class="dragndrop" src="6.jpg" draggable="true" ondragstart="drag(event)">
+<img id="8" class="dragndrop" src="8.jpg" draggable="true" ondragstart="drag(event)">
+
+<br>
+<button onclick="checkPictureCorrectness()">Is it correct?</button>
+<div id="result"></div>
+</body>
+</html>

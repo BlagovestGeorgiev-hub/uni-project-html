@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Clock</title>
+	<meta charset="utf-8">
+</head >
+
+<body>
+<canvas id="canvas" width="400" height="400"></canvas>
+
+<script>
+	let canvas = document.getElementById("canvas");
+	let ctx = canvas.getContext("2d");
+	let radius = canvas.height / 2;
+	let global_counter = 0;
+	let colors_to_use = ["Brown", "Blue", "Crimson", "DarkBlue", "DarkMagenta", "ForestGreen", "Indigo", "Maroon", "Violet", "Yellow"];
+	ctx.translate(radius, radius);
+	radius = radius * 0.90;
+	setInterval(draw_clock, 3);
+	
+	function draw_clock() {
+		global_counter++;
+		draw_face(ctx, radius);
+		draw_numbers_and_picturess(ctx, radius);
+		draw_time(ctx, radius);
+		check_for_color_change();
+	}
+	
+	let major_color = "red";
+	let minor_color = "white";
+	function draw_face(ctx, radius) {
+		let grad;
+		ctx.beginPath();
+		ctx.arc(0, 0, radius, 0, 2*Math.PI);
+		ctx.fillStyle = "white";
+		ctx.fill();
+		grad = ctx.createRadialGradient(0,0,radius*0.95, 0,0,radius*1.05);
+		grad.addColorStop(0, major_color);
+		grad.addColorStop(0.5, minor_color);
+		grad.addColorStop(1, major_color);
+		ctx.strokeStyle = grad;
+		ctx.lineWidth = radius*0.1;
+		ctx.stroke();
+		ctx.beginPath();
+		ctx.arc(0, 0, radius*0.1, 0, 2*Math.PI);
+		ctx.fillStyle = "#333";
+		ctx.fill();
+	}
+	let hours_left = [];
+	function draw_numbers_and_picturess(ctx, radius) {
+		let ang;
+		let num;
+		let img_one = new Image();
+		let img_two = new Image();
+		let img_three = new Image();
+		let img_four = new Image();
+		img_one.src = "../pictures/01.jpg"
+		img_two.src = "../pictures/02.jpg"
+		img_three.src = "../pictures/03.jpg"
+		img_four.src = "../pictures/04.jpg"
+		ctx.font = radius*0.15 + "px arial";
+		ctx.textBaseline="middle";
+		ctx.textAlign="center";
+		for(num = 1; num < 13; num++){
+			ang = num * Math.PI / 6;
+			ctx.rotate(ang);
+			ctx.translate(0, -radius*0.85);
+			ctx.rotate(-ang);
+			if (num === 1 && hours_left.includes(1) ||
+				num === 4 && hours_left.includes(4) ||
+				num === 7 && hours_left.includes(7) ||
+				num === 10 && hours_left.includes(10)){
+				ctx.drawImage(img_one, -15, -15);
+			}else if(num === 2 && hours_left.includes(2) ||
+				num === 5 && hours_left.includes(5) ||
+				num === 8 && hours_left.includes(8) ||
+				num === 11 && hours_left.includes(11)){
+				ctx.drawImage(img_two, -15, -15);
+			}else if(num === 3 && hours_left.includes(3) ||
+				num === 6 && hours_left.includes(6) ||
+				num === 9 && hours_left.includes(9) ||
+				num === 12 && hours_left.includes(12)){
+				ctx.drawImage(img_three, -15, -15);
+			}else {
+				ctx.fillText(num.toString(), 0, 0);
+			}
+			ctx.rotate(ang);
+			ctx.translate(0, radius*0.85);
+			ctx.rotate(-ang);
+			
+			
+		}
+	}
+	
+	let now = null;
+	let hour = null;
+	let minute = null;
+	let second = null;	
+	let initialise_starting_time = (function() {
+		let executed = false;
+		return function() {
+			if (!executed) {
+            executed = true;
+            now = new Date();
+			hour = now.getHours();
+			start_hour = now.getHours();
+			minute = now.getMinutes();
+			second = now.getSeconds();	
+			global_counter = second + minute * 60 + hour * 3600;
+			}
+		};
+	})();
+		
+	function draw_time(ctx, radius){
+		initialise_starting_time();
+		second = global_counter % 60;
+		minute = ((global_counter - second) / 60) % 60;
+		hour = ((global_counter - minute * 60) - second) / 3600 ;
+		hour=hour%12;
+		if(!hours_left.includes(hour)){
+			hours_left.push(hour);
+			if(hour === 0){
+			hours_left.pop();
+				hours_left.push(12);
+			}
+			if(hours_left.length > 1){
+				hours_left.shift();
+			}
+		}
+		hour=(hour*Math.PI/6) + (minute*Math.PI/(6*60)) + (second*Math.PI/(360*60));
+		draw_hand(ctx, hour, radius*0.5, radius*0.07);
+		minute=(minute*Math.PI/30)+(second*Math.PI/(30*60));
+		draw_hand(ctx, minute, radius*0.8, radius*0.07);
+		second=(second*Math.PI/30);
+		draw_hand(ctx, second, radius*0.9, radius*0.02);
+	}
+	
+	function draw_hand(ctx, pos, length, width) {
+		ctx.beginPath();
+		ctx.lineWidth = width;
+		ctx.lineCap = "round";
+		ctx.moveTo(0,0);
+		ctx.rotate(pos);
+		ctx.lineTo(0, -length);
+		ctx.stroke();
+		ctx.rotate(-pos);
+	}
+	
+	function check_for_color_change(){
+		if (global_counter % 300 === 0){
+			major_color = colors_to_use[Math.floor(Math.random() * (colors_to_use.length - 1))];
+		}
+	}
+</script>
+</body>
+</html>

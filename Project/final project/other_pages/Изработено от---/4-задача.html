@@ -1,0 +1,26 @@
+<html>
+<head>
+<meta charset="UTF-8">
+<style>			
+			
+</style>
+<script>
+		function check(){
+			if(document.getElementById ("result").value == 1995){
+				document.getElementById("ans1").style.color="green";
+				document.getElementById("ans1").innerHTML="you win!";
+			}
+			else{
+				document.getElementById("ans1").style.color="red";
+				document.getElementById("ans1").innerHTML="ERROR 404";	
+			}
+		}
+</script>
+</head>
+	<body background="http://allswalls.com/images/java-wallpaper-1.jpg" alt="Счупи са брат!">
+		<div>  През коя година е реализиран езика java?</div>
+		<div><input type="number" id="result" min="4" max="100" placeholder=""></div>
+		<div>Отговор: <span id="ans1">няма</span></div>
+		<button onClick = "check()">check</button>
+</body>
+</html>
